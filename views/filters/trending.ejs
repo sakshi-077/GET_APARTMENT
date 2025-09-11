@@ -1,0 +1,47 @@
+<% layout('/layouts/boilerplate') -%>
+
+<body>
+  <header class="hero">
+    <h1>✨ Trending Now: August Escapes Worth Booking</h1>
+    <p>
+      Discover India’s most magical monsoon destinations, hidden gems, and
+      soulful stays—curated for wanderers who crave more than just a room.
+    </p>
+  </header>
+
+  <main>
+    <% sections.forEach(section => { %>
+    <section class="category">
+      <h2><%= section.title %></h2>
+      <p class="tagline"><%= section.description %></p>
+      <ul class="place-list">
+        <% section.places.forEach(place => { %>
+        <li><strong><%= place.name %></strong>: <%= place.detail %></li>
+        <% }) %>
+      </ul>
+    </section>
+    <% }) %>
+
+    <section class="stay-types">
+      <h2>🛏️ Trending Stay Types</h2>
+      <ul>
+        <li>
+          <strong>Rainforest Cabins</strong>: Wake up to birdsong and mist
+        </li>
+        <li>
+          <strong>Tea Estate Villas</strong>: Sip local brews with panoramic
+          views
+        </li>
+        <li><strong>Eco-Lodges</strong>: Sustainable stays with soul</li>
+        <li>
+          <strong>Heritage Homestays</strong>: Live like a local, stories
+          included
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 WanderNest</p>
+  </footer>
+</body>

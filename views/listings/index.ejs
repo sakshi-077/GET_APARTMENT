@@ -1,0 +1,79 @@
+<% layout('/layouts/boilerplate') -%>
+<body>
+  <div id="filters">
+    <div class="filter">
+      <a href="listings/trending"
+        ><i class="fa fa-fire" aria-hidden="true"></i>
+        <p>Trending</p></a
+      >
+    </div>
+    <div class="filter">
+      <i class="fa fa-ship" aria-hidden="true"></i>
+      <p>Beach</p>
+    </div>
+    <div class="filter">
+      <i class="fa fa-snowflake" aria-hidden="true"></i>
+      <p>Mountain</p>
+    </div>
+    <div class="filter">
+      <i class="fa fa-bath" aria-hidden="true"></i>
+      <p>Swimming</p>
+    </div>
+    <div class="filter">
+      <i class="fa fa-university" aria-hidden="true"></i>
+      <p>Buildings</p>
+    </div>
+    <div class="filter">
+      <i class="fa fa-leaf" aria-hidden="true"></i>
+      <p>Forest</p>
+    </div>
+
+    <div class="tax-toggle m-start">
+      <div class="form-check-reverse form-switch" role="switch">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          role="switch"
+          id="switchCheckDefault"
+        />
+        <label class="form-check-label" for="switchCheckDefault"
+          >Display total after taxes</label
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- <form action="/listings/new" method="get">
+    <button>Create New Listing</button>
+  </form> -->
+
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+    <% for(let listing of allListings){ %>
+    <a href="listings/<%=listing.id%>" class="listing-link">
+      <div class="card col listing-card">
+        <img
+          src="<%=listing.image.url%>"
+          class="card-img-top"
+          alt="listing image"
+          style="height: 20rem"
+        />
+        <div class="card-img-overlay"></div>
+        <div class="card-body">
+          <p class="card-text">
+            <%=listing.title%><br />
+            <%=listing.price.toLocaleString("en-IN")%>
+            <i id="tax-info"> +18% GST</i>/ night
+          </p>
+        </div>
+      </div>
+    </a>
+    <% } %>
+  </div>
+</body>
+
+<script>
+  const toggle = document.getElementById("switchCheckDefault");
+  toggle.addEventListener("click", () => {
+    toggle
+  });
+</script>
