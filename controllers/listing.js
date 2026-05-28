@@ -21,7 +21,7 @@ module.exports.createnewListing = async (req, res, next) => {
 };
 
 module.exports.show = async (req, res) => {
-  console.log("working");
+  
   let { id } = req.params;
   const listing = await Listing.findById(id)
     .populate({
