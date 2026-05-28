@@ -4,8 +4,7 @@ if (process.env.NODE_ENV != "production") {
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
-const path = require("path");
+const dbUrl = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/wanderlust";const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const session = require("express-session");
@@ -20,9 +19,14 @@ const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
 const sessionOptions = {
-  secret: "mysupersecretcode",
+  secret: process.env.SECRET || "mysupersecretcode",
   resave: false,
   saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+  },
 };
 
 main()
@@ -34,7 +38,7 @@ main()
   });
 
 async function main() {
-  await mongoose.connect(MONGO_URL);
+  await mongoose.connect(dbUrl);
 }
 
 app.use(express.urlencoded({ extended: true }));
@@ -75,7 +79,7 @@ app.use((err, req, res, next) => {
   let { statusCode = 500, message = "something went wrong" } = err;
   res.status(statusCode).render("error.ejs", { message });
 });
-
-app.listen(8080, () => {
-  console.log("listening to port 8080");
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+  console.log(`listening to port ${port}`);
 });
