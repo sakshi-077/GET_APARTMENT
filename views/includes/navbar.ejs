@@ -1,3 +1,20 @@
+<style>
+  .search-btn {
+    background-color: #fe424d !important;
+    color: white;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    margin-left: 0.5rem;
+    border-radius: 1.75rem;
+  }
+  .search-inp {
+    border-radius: 1.75rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border: 1px solid #fe424d;
+    width: 20rem;
+  }
+</style>
+
+
 <nav class="navbar navbar-expand-md bg-body-light sticky-top border-bottom">
   <div class="container-fluid">
     <a class="navbar-brand" href="/listings"
@@ -16,7 +33,15 @@
         <a class="nav-link" href="/listings">Explore</a>
       </div>
       <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/listings/new">Airbnb Your home</a>
+        <form class="d-flex" role="search" action="/listings" method="GET">
+        <input class="search-inp form-control mr-sm-2" type="search" placeholder="Destination" aria-label="Search" name="search" ">
+        <button class="search-btn btn-outline my-2 my-sm-0 ml-2" type="submit">Search</button>
+      </form>
+      </div>
+      
+
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/listings/new" >Airbnb Your home</a>
         <%if(!currUser){%>
         <a class="nav-link" href="/login"><b>Login</b></a>
         <a class="nav-link" href="/signup"><b>Sign Up</b></a>

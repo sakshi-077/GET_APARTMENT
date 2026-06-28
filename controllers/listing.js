@@ -1,9 +1,52 @@
 const Listing = require("../models/listing.js");
 
+// module.exports.index = async (req, res) => {
+//   // const allListings = await Listing.find({});
+//   // res.render("listings/index.ejs", { allListings });
+
+//   const { category } = req.query;
+//   let filter = {};
+
+//   // If a category query parameter is passed, add it to the filter object
+//   if (category) {
+//     filter.category = category;
+//   }
+//   console.log("Incoming Filter Category:", category);
+//   const allListings = await Listing.find(filter);
+//   console.log("Filtered Listings:", allListings.length);
+//   res.render("listings/index.ejs", { allListings, selectedCategory: category });
+// };
+
+
 module.exports.index = async (req, res) => {
-  const allListings = await Listing.find({});
-  res.render("listings/index.ejs", { allListings });
+  const { category, search } = req.query;
+  let filter = {};
+
+  // 1. Handle Category Filtering
+  if (category) {
+    filter.category = category;
+  }
+
+  // 2. Handle Country Search Filtering
+  if (search) {
+    // 'i' makes the search case-insensitive
+    filter.country = { $regex: search.trim(), $options: "i" }; 
+  }
+
+  console.log("Current Database Query Filter:", filter);
+  
+  const allListings = await Listing.find(filter);
+  
+  // If a search returned empty results, let's send a flash message alert
+  if (search && allListings.length === 0) {
+    req.flash("error", `No listings found for "${search}"`);
+    return res.redirect("/listings");
+  }
+
+  res.render("listings/index.ejs", { allListings, selectedCategory: category || "" });
 };
+
+
 module.exports.createnewListingForm = (req, res) => {
   res.render("listings/new.ejs");
 };

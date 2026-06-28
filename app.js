@@ -4,10 +4,11 @@ if (process.env.NODE_ENV != "production") {
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const dbUrl = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/wanderlust";const path = require("path");
+const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const session = require("express-session");
+const {MongoStore} = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -18,8 +19,23 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
+const dbUrl = process.env.MONGO_URL ;
+
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 60 * 60,
+  crypto: {
+    secret: process.env.SECRET,
+  },
+});
+
+store.on("error", (err) => {
+    console.log("ERROR IN MONGO SESSION STORE", err);
+});
+
 const sessionOptions = {
-  secret: process.env.SECRET || "mysupersecretcode",
+  store,
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -28,6 +44,8 @@ const sessionOptions = {
     sameSite: "lax",
   },
 };
+
+
 
 main()
   .then(() => {

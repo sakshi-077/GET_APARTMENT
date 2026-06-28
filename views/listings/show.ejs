@@ -12,6 +12,9 @@
       />
       <div class="card-body">
         <p class="card-text">
+          <span class="badge rounded-pill bg-dark text-white mb-3">
+            <i class="fa-solid fa-tags me-1"></i> <%= listing.category %>
+          </span>
           <p><b>Owned by: </b><i><%=listing.owner.username%></i></p>
           <p><b><%= listing.title %></b><br /></p>
           <p><%= listing.description %> <br /></p>

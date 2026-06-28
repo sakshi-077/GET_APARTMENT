@@ -21,32 +21,6 @@ router
 //new route
 router.get("/new", isLoggedIn, listingController.createnewListingForm);
 
-router.get("/trending", async (req, res) => {
-  const sections = [
-    {
-      title: "🏞️ Misty Hill Escapes",
-      description:
-        "Perfect for: Cozy retreats, nature walks, and hot chai with a view",
-      places: [
-        {
-          name: "Munnar, Kerala",
-          detail: "Lush tea gardens, misty mornings, and waterfall treks",
-        },
-        {
-          name: "Mussoorie, Uttarakhand",
-          detail: "Cable car rides, heritage strolls, and Kempty Falls",
-        },
-        {
-          name: "Darjeeling, West Bengal",
-          detail: "Sunrise at Tiger Hill and Himalayan Railway charm",
-        },
-      ],
-    },
-    // Add other sections here...
-  ];
-  res.render("filters/trending", { sections });
-});
-
 router
   .route("/:id")
   .get(wrapAsync(listingController.show))
