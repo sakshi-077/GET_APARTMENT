@@ -21,6 +21,8 @@ const userRouter = require("./routes/user.js");
 
 const dbUrl = process.env.MONGO_URL ;
 
+app.set("trust proxy", 1); // trust first proxy
+
 const store = MongoStore.create({
   mongoUrl: dbUrl,
   touchAfter: 24 * 60 * 60,
